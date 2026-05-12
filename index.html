@@ -43,17 +43,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(253,246,236,
 .hero-logo{flex-shrink:0;width:min(360px,38vw);animation:float 4s ease-in-out infinite;}
 .hero-logo img{width:100%;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-
-/* Hero CTAs */
 .hero-ctas{display:flex;gap:0.9rem;flex-wrap:wrap;}
 .hero-cta{display:inline-flex;align-items:center;gap:0.6rem;background:var(--brown-dark);color:var(--cream);text-decoration:none;font-weight:800;font-size:0.95rem;padding:0.85rem 2rem;border-radius:50px;transition:transform 0.2s,background 0.2s;}
 .hero-cta:hover{background:var(--brown);transform:translateY(-2px);}
 .hero-cta-buy{display:inline-flex;align-items:center;gap:0.6rem;background:var(--gold);color:var(--brown-dark);text-decoration:none;font-weight:900;font-size:0.95rem;padding:0.85rem 2rem;border-radius:50px;transition:transform 0.2s,background 0.2s;border:2px solid var(--gold-light);}
 .hero-cta-buy:hover{background:var(--gold-light);transform:translateY(-2px);}
-
 .bits{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
 
-/* MARQUEE TICKER */
+/* MARQUEE */
 .ticker{background:var(--brown-dark);color:var(--gold-light);padding:0.7rem 0;overflow:hidden;border-top:2px solid var(--brown);border-bottom:2px solid var(--brown);}
 .ticker-track{display:flex;width:max-content;animation:ticker-scroll 28s linear infinite;}
 .ticker-track:hover{animation-play-state:paused;}
@@ -81,7 +78,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(253,246,236,
 .card-arandanos .product-card-info h3{color:#ffd8d8;}
 .card-arandanos .product-card-info p{color:#e09a9a;}
 
-/* GALLERY / SABORES */
+/* GALLERY */
 .gallery{background:var(--cream);padding:5rem 2rem;}
 .gallery-header{text-align:center;margin-bottom:3rem;}
 .container{max-width:1100px;margin:0 auto;}
@@ -181,6 +178,358 @@ footer{background:var(--brown-dark);color:rgba(253,246,236,0.5);text-align:cente
 footer span{color:var(--gold-light);}
 .since{margin-top:0.4rem;font-size:0.72rem;opacity:0.4;}
 
+/* ═══════════════════════════════════════
+   GRANOLIN BOT
+═══════════════════════════════════════ */
+
+/* Floating button */
+#bot-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--brown-dark);
+  color: var(--cream);
+  border: none;
+  border-radius: 50px;
+  padding: 0.65rem 1.2rem 0.65rem 0.65rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(61,31,10,0.3);
+  transition: transform 0.2s, background 0.2s;
+  z-index: 999;
+}
+#bot-fab:hover { background: var(--brown); transform: translateY(-3px); }
+
+.fab-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  border: 2px solid var(--gold-light);
+  overflow: hidden;
+  position: relative;
+}
+.fab-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+.fab-notif {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 12px;
+  height: 12px;
+  background: #e74c3c;
+  border-radius: 50%;
+  border: 2px solid var(--cream);
+}
+
+/* Chat window */
+#chat-window {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1.5rem;
+  width: 340px;
+  max-height: 520px;
+  background: var(--cream);
+  border: 2px solid var(--beige);
+  border-radius: 22px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 12px 40px rgba(61,31,10,0.22);
+  z-index: 998;
+  overflow: hidden;
+  font-family: 'Nunito', sans-serif;
+}
+#chat-window.open { display: flex; }
+
+.chat-header {
+  background: var(--brown-dark);
+  color: var(--cream);
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+.chat-header-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  border: 2px solid var(--gold-light);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.chat-header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+.chat-header-info { flex: 1; min-width: 0; }
+.chat-header-name { font-family: 'Fraunces', serif; font-weight: 900; font-size: 1.05rem; line-height: 1.1; }
+.chat-header-sub { font-size: 0.68rem; color: var(--gold-light); font-weight: 700; margin-top: 1px; }
+.chat-close { background: none; border: none; color: var(--cream); font-size: 1.1rem; cursor: pointer; opacity: 0.6; padding: 0; line-height: 1; flex-shrink: 0; }
+.chat-close:hover { opacity: 1; }
+
+.chat-msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  scroll-behavior: smooth;
+}
+.chat-msgs::-webkit-scrollbar { width: 4px; }
+.chat-msgs::-webkit-scrollbar-thumb { background: var(--beige); border-radius: 4px; }
+
+.msg {
+  max-width: 88%;
+  font-size: 0.83rem;
+  font-weight: 600;
+  line-height: 1.55;
+  border-radius: 14px;
+  padding: 0.55rem 0.9rem;
+  word-break: break-word;
+}
+.msg.bot {
+  background: var(--cream-dark);
+  color: var(--text);
+  border: 1.5px solid var(--beige);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.msg.user {
+  background: var(--brown-dark);
+  color: var(--cream);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.msg.loading {
+  background: var(--cream-dark);
+  color: var(--text-light);
+  border: 1.5px solid var(--beige);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  font-style: italic;
+  font-size: 0.78rem;
+}
+.msg a { color: var(--gold); font-weight: 800; }
+
+/* Chips */
+.chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0 0.85rem 0.6rem;
+  flex-shrink: 0;
+}
+.chip {
+  background: var(--cream-dark);
+  border: 1.5px solid var(--beige);
+  color: var(--brown-dark);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.73rem;
+  font-weight: 800;
+  padding: 0.3rem 0.75rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.chip:hover { background: var(--beige); border-color: var(--brown-light); }
+
+/* Sabor checkboxes */
+.sabor-select-wrap {
+  padding: 0.4rem 0.85rem 0.5rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+.sabor-opt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--cream-dark);
+  border: 1.5px solid var(--beige);
+  border-radius: 10px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+  user-select: none;
+}
+.sabor-opt input { display: none; }
+.sabor-opt.selected { background: var(--beige); border-color: var(--gold); }
+.sabor-count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+.sabor-count label { font-size: 0.75rem; font-weight: 700; color: var(--text-light); }
+.sabor-count input[type=number] {
+  width: 54px;
+  border: 1.5px solid var(--beige);
+  border-radius: 8px;
+  padding: 0.25rem 0.4rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: var(--cream-dark);
+  color: var(--text);
+  outline: none;
+}
+.sabor-count input[type=number]:focus { border-color: var(--gold); }
+.sabor-confirm-btn {
+  background: var(--gold);
+  color: var(--brown-dark);
+  border: none;
+  border-radius: 50px;
+  padding: 0.45rem 1.1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  transition: background 0.15s;
+  align-self: flex-start;
+}
+.sabor-confirm-btn:hover { background: var(--gold-light); }
+
+/* Mail input */
+.mail-input-row {
+  display: none;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem 0.5rem;
+  flex-shrink: 0;
+}
+.mail-input {
+  border: 1.5px solid var(--beige);
+  border-radius: 10px;
+  padding: 0.42rem 0.85rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: var(--cream-dark);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.mail-input:focus { border-color: var(--gold); }
+.mail-submit {
+  background: var(--gold);
+  color: var(--brown-dark);
+  border: none;
+  border-radius: 50px;
+  padding: 0.42rem 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 0.78rem;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.15s;
+}
+.mail-submit:hover { background: var(--gold-light); }
+
+/* Input row */
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-top: 1.5px solid var(--beige);
+  background: var(--cream);
+  flex-shrink: 0;
+}
+.chat-input {
+  flex: 1;
+  border: 1.5px solid var(--beige);
+  border-radius: 50px;
+  padding: 0.42rem 0.9rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--cream-dark);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.chat-input:focus { border-color: var(--gold); }
+.chat-send {
+  background: var(--brown-dark);
+  color: var(--cream);
+  border: none;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.chat-send:hover { background: var(--brown); }
+.chat-footer-bot {
+  text-align: center;
+  font-size: 0.62rem;
+  color: var(--text-light);
+  opacity: 0.5;
+  padding: 0.25rem 0 0.4rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Pedido confirm card */
+.pedido-confirm-card {
+  background: var(--cream-dark);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.7;
+  max-width: 88%;
+  align-self: flex-start;
+}
+.pedido-confirm-card .pedido-num {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
 /* RESPONSIVE */
 @media(max-width:768px){
   .products-grid,.why-grid,.flavor-layout{grid-template-columns:1fr;}
@@ -194,6 +543,7 @@ footer span{color:var(--gold-light);}
   .hero-sub{margin-left:auto;margin-right:auto;}
   .hero-logo{width:min(260px,65vw);}
   .hero-ctas{justify-content:center;}
+  #chat-window{width:calc(100vw - 2rem);right:1rem;bottom:5.5rem;}
 }
 </style>
 </head>
@@ -233,9 +583,7 @@ footer span{color:var(--gold-light);}
       <h1>Bienvenidos a <span>Crune</span></h1>
       <p class="hero-sub">Hecho con amor y avena, para llevar donde vayas.</p>
       <div class="hero-ctas">
-        <a href="#contacto" class="hero-cta-buy">
-          🛒 Comprar ya
-        </a>
+        <a href="#contacto" class="hero-cta-buy">🛒 Comprar ya</a>
         <a href="#productos" class="hero-cta">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
           Ver productos
@@ -248,7 +596,7 @@ footer span{color:var(--gold-light);}
   </div>
 </section>
 
-<!-- TICKER / MARQUEE -->
+<!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track">
     <span class="ticker-item">⚡ Energía para el TP de último momento</span>
@@ -311,7 +659,7 @@ footer span{color:var(--gold-light);}
   </div>
 </section>
 
-<!-- SABORES / INGREDIENTES -->
+<!-- SABORES -->
 <section class="gallery" id="sabores">
   <div class="container">
     <div class="gallery-header">
@@ -323,7 +671,6 @@ footer span{color:var(--gold-light);}
       <button class="tab-btn choco" onclick="showFlavor('choco')">🍫 Choco Chips</button>
       <button class="tab-btn arandanos" onclick="showFlavor('arandanos')">🫐 Arándanos</button>
     </div>
-
     <div class="flavor-panel active" id="panel-clasica">
       <div class="flavor-layout">
         <div class="flavor-col">
@@ -338,13 +685,10 @@ footer span{color:var(--gold-light);}
         </div>
         <div class="flavor-col">
           <p class="flavor-col-label">Ingredientes</p>
-          <div class="ingredients-card">
-            <img src="images/clasica-ingredientes.png" alt="Ingredientes Clásica">
-          </div>
+          <div class="ingredients-card"><img src="images/clasica-ingredientes.png" alt="Ingredientes Clásica"></div>
         </div>
       </div>
     </div>
-
     <div class="flavor-panel" id="panel-choco">
       <div class="flavor-layout">
         <div class="flavor-col">
@@ -359,13 +703,10 @@ footer span{color:var(--gold-light);}
         </div>
         <div class="flavor-col">
           <p class="flavor-col-label">Ingredientes</p>
-          <div class="ingredients-card">
-            <img src="images/choco-ingredientes.png" alt="Ingredientes Choco Chips">
-          </div>
+          <div class="ingredients-card"><img src="images/choco-ingredientes.png" alt="Ingredientes Choco Chips"></div>
         </div>
       </div>
     </div>
-
     <div class="flavor-panel" id="panel-arandanos">
       <div class="flavor-layout">
         <div class="flavor-col">
@@ -380,9 +721,7 @@ footer span{color:var(--gold-light);}
         </div>
         <div class="flavor-col">
           <p class="flavor-col-label">Ingredientes</p>
-          <div class="ingredients-card">
-            <img src="images/arandanos-ingredientes.png" alt="Ingredientes Arándanos">
-          </div>
+          <div class="ingredients-card"><img src="images/arandanos-ingredientes.png" alt="Ingredientes Arándanos"></div>
         </div>
       </div>
     </div>
@@ -433,41 +772,17 @@ footer span{color:var(--gold-light);}
     <p class="section-label">¿Por qué elegirnos?</p>
     <h2 class="section-title">Por qué Crune</h2>
     <div class="why-grid">
-      <div class="why-card why-card-1">
-        <div class="why-icon-wrap">🎓</div>
-        <h3>Hecha por estudiantes</h3>
-        <p>Nació en la facultad y está pensada por y para universitarios que la rompen todos los días.</p>
-      </div>
-      <div class="why-card why-card-2">
-        <div class="why-icon-wrap">💛</div>
-        <h3>Con amor de verdad</h3>
-        <p>Cada bolsa la preparamos nosotros mismos, con cuidado y cariño en cada paso del proceso.</p>
-      </div>
-      <div class="why-card why-card-3">
-        <div class="why-icon-wrap">🔥</div>
-        <h3>Granola horneada</h3>
-        <p>Horneada artesanalmente para lograr ese crujido perfecto que te cambia el día desde el primer bocado.</p>
-      </div>
-      <div class="why-card why-card-4">
-        <div class="why-icon-wrap">🎒</div>
-        <h3>Práctica para llevar</h3>
-        <p>Entra en cualquier mochila. Lista para cuando la necesités, donde sea que estés.</p>
-      </div>
-      <div class="why-card why-card-5">
-        <div class="why-icon-wrap">🌱</div>
-        <h3>Ingredientes reales</h3>
-        <p>Sin conservantes, sin rellenos. Solo ingredientes honestos que podés leer y pronunciar.</p>
-      </div>
-      <div class="why-card why-card-6">
-        <div class="why-icon-wrap">💸</div>
-        <h3>Precio de estudiante</h3>
-        <p>Sabemos lo que es vivir con lo justo. Por eso los precios son accesibles, sin vueltas.</p>
-      </div>
+      <div class="why-card"><div class="why-icon-wrap">🎓</div><h3>Hecha por estudiantes</h3><p>Nació en la facultad y está pensada por y para universitarios que la rompen todos los días.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">💛</div><h3>Con amor de verdad</h3><p>Cada bolsa la preparamos nosotros mismos, con cuidado y cariño en cada paso del proceso.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">🔥</div><h3>Granola horneada</h3><p>Horneada artesanalmente para lograr ese crujido perfecto que te cambia el día desde el primer bocado.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">🎒</div><h3>Práctica para llevar</h3><p>Entra en cualquier mochila. Lista para cuando la necesités, donde sea que estés.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">🌱</div><h3>Ingredientes reales</h3><p>Sin conservantes, sin rellenos. Solo ingredientes honestos que podés leer y pronunciar.</p></div>
+      <div class="why-card"><div class="why-icon-wrap">💸</div><h3>Precio de estudiante</h3><p>Sabemos lo que es vivir con lo justo. Por eso los precios son accesibles, sin vueltas.</p></div>
     </div>
   </div>
 </section>
 
-<!-- OPINIONES / REVIEWS -->
+<!-- OPINIONES -->
 <section class="reviews" id="opiniones">
   <div class="container">
     <div class="reviews-header">
@@ -489,7 +804,6 @@ footer span{color:var(--gold-light);}
         <button class="reviews-submit" onclick="submitReview()">Publicar opinión</button>
       </div>
     </div>
-    <!-- Mensaje "sin opiniones" separado de la lista -->
     <div class="no-reviews-msg" id="no-reviews-msg">Todavía no hay opiniones. ¡Sé el primero en escribir!</div>
     <div class="reviews-list" id="reviews-list"></div>
   </div>
@@ -519,26 +833,591 @@ footer span{color:var(--gold-light);}
   <p class="since">Since 2026</p>
 </footer>
 
+<!-- ═══════════════════════════════════════
+     GRANOLIN BOT
+═══════════════════════════════════════ -->
+
+<!-- Floating button -->
+<button id="bot-fab" onclick="toggleChat()">
+  <div class="fab-avatar" id="fab-avatar">
+    <!--
+      IMAGEN DE GRANOLIN:
+      Reemplazá el emoji de abajo por:
+      <img src="images/granolin.png" alt="Granolin">
+      y borrá el span del emoji.
+    -->
+    <span id="fab-emoji" style="font-size:1.2rem;">🌾</span>
+  </div>
+  <span>Hablá con Granolin</span>
+  <span class="fab-notif" id="fab-notif"></span>
+</button>
+
+<!-- Chat window -->
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-header-avatar" id="header-avatar">
+      <!--
+        IMAGEN DE GRANOLIN EN EL HEADER:
+        Reemplazá el emoji de abajo por:
+        <img src="images/granolin.png" alt="Granolin">
+        y borrá el span del emoji.
+      -->
+      <span style="font-size:1.4rem;">🌾</span>
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Granolin</div>
+      <div class="chat-header-sub">Asistente de Crune · En línea 🟢</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <div class="chat-msgs" id="chat-msgs"></div>
+
+  <div class="chips-wrap" id="chips-wrap"></div>
+
+  <!-- Sabor multi-select (se muestra en el paso de pedido) -->
+  <div class="sabor-select-wrap" id="sabor-select-wrap">
+    <div class="sabor-opt" id="opt-clasica" onclick="toggleSabor('clasica')">
+      <span>🌾 Clásica</span>
+    </div>
+    <div class="sabor-opt" id="opt-choco" onclick="toggleSabor('choco')">
+      <span>🍫 Choco Chips <small style="font-weight:600;color:#c9901a;">(vuelve la semana que viene)</small></span>
+    </div>
+    <div class="sabor-opt" id="opt-arandanos" onclick="toggleSabor('arandanos')">
+      <span>🫐 Arándanos</span>
+    </div>
+    <div class="sabor-count">
+      <label>Cantidad:</label>
+      <input type="number" id="cant-input" min="1" max="99" value="1" placeholder="1">
+    </div>
+    <button class="sabor-confirm-btn" onclick="confirmarSabores()">Confirmar 🌾</button>
+  </div>
+
+  <!-- Mail input -->
+  <div class="mail-input-row" id="mail-input-row">
+    <input class="mail-input" id="mail-input" type="email" placeholder="tunombre@mail.com">
+    <button class="mail-submit" onclick="submitMail()">Anotarme 🌾</button>
+  </div>
+
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" placeholder="Escribí tu consulta..." onkeydown="handleKey(event)">
+    <button class="chat-send" onclick="sendUserMsg()" aria-label="Enviar">➤</button>
+  </div>
+  <div class="chat-footer-bot">Granolin · Asistente de Crune</div>
+</div>
+
 <script>
-// ── Flavor tabs ──────────────────────────────────────────────
+/* ════════════════════════════════════════════════════════
+   CONFIGURACIÓN
+   ════════════════════════════════════════════════════════
+   
+   IMPORTANTE: pegá acá la URL de tu Google Apps Script
+   (instrucciones en el README que te paso)
+*/
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxOLf5k6wVv9aEnWqsm_34nyOX9HM5Pu5V-WKerG8OGJI_HA-CI6YShoE75LixSV07BfQ/exec';
+
+/* ────────────────────────────────────────────────────── */
+
+const PRECIOS = { 1: 5000, 2: 9000, 3: 13400, 4: 17500 };
+
+function calcPrecio(n) {
+  if (n <= 0) return 0;
+  if (n === 1) return 5000;
+  if (n === 2) return 9000;
+  if (n === 3) return 13400;
+  if (n === 4) return 17500;
+  // Más de 4: múltiplos del precio unitario más barato
+  const packs4 = Math.floor(n / 4);
+  const resto  = n % 4;
+  return packs4 * 17500 + (resto > 0 ? PRECIOS[resto] || resto * 5000 : 0);
+}
+
+function formatPeso(n) {
+  return '$' + n.toLocaleString('es-AR');
+}
+
+function generarNroPedido() {
+  return 'CRN-' + Date.now().toString().slice(-6);
+}
+
+let chatOpen = false;
+let state = 'idle'; // idle | pedido_nombre | pedido_zona | pedido_contacto | pedido_pago | awaiting_mail
+
+let pedido = { nombre: '', zona: '', contacto: '', sabores: {}, cantidad: 1, nro: '' };
+let selectedSabores = {};
+
+/* ─── Toggle chat ─── */
+function toggleChat() {
+  chatOpen = !chatOpen;
+  const win = document.getElementById('chat-window');
+  document.getElementById('fab-notif').style.display = 'none';
+  if (chatOpen) {
+    win.classList.add('open');
+    if (document.getElementById('chat-msgs').children.length === 0) initChat();
+    scrollDown();
+  } else {
+    win.classList.remove('open');
+  }
+}
+
+function scrollDown() {
+  const msgs = document.getElementById('chat-msgs');
+  setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 80);
+}
+
+/* ─── Messages ─── */
+function addMsg(html, type, delay = 0) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const msgs = document.getElementById('chat-msgs');
+      const div = document.createElement('div');
+      div.className = 'msg ' + type;
+      div.innerHTML = html;
+      msgs.appendChild(div);
+      scrollDown();
+      resolve();
+    }, delay);
+  });
+}
+
+let loadingEl = null;
+function showLoading() {
+  const msgs = document.getElementById('chat-msgs');
+  loadingEl = document.createElement('div');
+  loadingEl.className = 'msg loading';
+  loadingEl.textContent = 'Granolin está escribiendo...';
+  msgs.appendChild(loadingEl);
+  scrollDown();
+}
+function hideLoading() { if (loadingEl) { loadingEl.remove(); loadingEl = null; } }
+
+/* ─── Chips ─── */
+function setChips(chips) {
+  const wrap = document.getElementById('chips-wrap');
+  wrap.innerHTML = '';
+  chips.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.textContent = c.label;
+    btn.onclick = () => handleChip(c.action, c.label);
+    wrap.appendChild(btn);
+  });
+}
+function clearChips() { document.getElementById('chips-wrap').innerHTML = ''; }
+
+/* ─── Sabor select ─── */
+function showSaborSelect(show) {
+  document.getElementById('sabor-select-wrap').style.display = show ? 'flex' : 'none';
+  if (show) {
+    selectedSabores = {};
+    document.querySelectorAll('.sabor-opt').forEach(o => o.classList.remove('selected'));
+    document.getElementById('cant-input').value = 1;
+  }
+}
+
+function toggleSabor(s) {
+  const el = document.getElementById('opt-' + s);
+  if (selectedSabores[s]) {
+    delete selectedSabores[s];
+    el.classList.remove('selected');
+  } else {
+    selectedSabores[s] = true;
+    el.classList.add('selected');
+  }
+}
+
+function confirmarSabores() {
+  const cant = parseInt(document.getElementById('cant-input').value) || 1;
+  const saboresElegidos = Object.keys(selectedSabores);
+
+  if (saboresElegidos.length === 0) {
+    addMsg('Seleccioná al menos un sabor 👆', 'bot');
+    return;
+  }
+  if (cant < 1) {
+    addMsg('Poné una cantidad válida 😄', 'bot');
+    return;
+  }
+
+  pedido.sabores = saboresElegidos;
+  pedido.cantidad = cant;
+
+  const nombresMap = { clasica: '🌾 Clásica', choco: '🍫 Choco Chips', arandanos: '🫐 Arándanos' };
+  const saboresStr = saboresElegidos.map(s => nombresMap[s]).join(', ');
+
+  showSaborSelect(false);
+  addMsg(saboresStr + ' · ' + cant + ' bolsa/s', 'user');
+
+  showLoading();
+  setTimeout(() => {
+    hideLoading();
+    const precio = calcPrecio(cant);
+    addMsg('Perfecto 🙌 ' + saboresStr + ' · <strong>' + cant + ' bolsa/s = ' + formatPeso(precio) + '</strong>', 'bot');
+    setTimeout(() => {
+      addMsg('¿En qué zona estás? (ciudad o barrio)', 'bot');
+      state = 'pedido_zona';
+    }, 400);
+  }, 600);
+}
+
+/* ─── Mail ─── */
+function showMailInput(show) {
+  const row = document.getElementById('mail-input-row');
+  row.style.display = show ? 'flex' : 'none';
+}
+
+function submitMail() {
+  const mail = document.getElementById('mail-input').value.trim();
+  if (!mail || !mail.includes('@')) {
+    document.getElementById('mail-input').style.borderColor = '#c0392b';
+    return;
+  }
+  showMailInput(false);
+  addMsg(mail, 'user');
+  state = 'idle';
+  showLoading();
+  setTimeout(() => {
+    hideLoading();
+    addMsg('Listo, te sumamos a la lista de Crune 🎉', 'bot');
+    setTimeout(() => {
+      addMsg('Solo te escribimos para novedades, promos y restock 🌾', 'bot');
+      setTimeout(() => setChips([
+        { label: '🛒 Hacer un pedido', action: 'pedido' },
+        { label: '📸 Instagram', action: 'instagram' },
+      ]), 300);
+    }, 400);
+  }, 600);
+}
+
+/* ─── Enviar pedido a Google Sheets ─── */
+async function enviarPedidoASheets(data) {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'PEGA_AQUI_TU_APPS_SCRIPT_URL') {
+    console.warn('Apps Script URL no configurada.');
+    return false;
+  }
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return true;
+  } catch (e) {
+    console.error('Error enviando a Sheets:', e);
+    return false;
+  }
+}
+
+/* ─── Init chat ─── */
+function initChat() {
+  setTimeout(() => {
+    addMsg('Hola 👋 Soy <strong>Granolin</strong>, el asistente de Crune.<br>¿En qué te puedo ayudar?', 'bot');
+    setTimeout(() => setChips([
+      { label: '🌾 Ver sabores', action: 'sabores' },
+      { label: '💰 Ver precios', action: 'precios' },
+      { label: '🛒 Hacer un pedido', action: 'pedido' },
+      { label: '📦 Consultar stock', action: 'stock' },
+      { label: '🚚 Entregas', action: 'entregas' },
+      { label: '🤔 Ayudame a elegir', action: 'elegir' },
+      { label: '📬 Recibir novedades', action: 'novedades' },
+      { label: '📸 Instagram', action: 'instagram' },
+      { label: '💬 WhatsApp', action: 'whatsapp' },
+    ]), 500);
+  }, 350);
+}
+
+/* ─── Handle chip ─── */
+function handleChip(action, label) {
+  addMsg(label, 'user');
+  clearChips();
+  showSaborSelect(false);
+  showMailInput(false);
+  setTimeout(() => processAction(action), 200);
+}
+
+/* ─── Process action ─── */
+function processAction(action) {
+  showLoading();
+  setTimeout(() => {
+    hideLoading();
+
+    if (action === 'sabores') {
+      addMsg('Tenemos tres sabores artesanales 🌾', 'bot');
+      setTimeout(() => {
+        addMsg('🌾 <strong>Clásica</strong> — avena, miel, almendras y nueces.<br>🍫 <strong>Choco Chips</strong> — cacao, chips de chocolate y quinoa inflada. ⚠️ Vuelve la semana que viene.<br>🫐 <strong>Arándanos</strong> — arándanos deshidratados y semillas.', 'bot');
+        setTimeout(() => setChips([
+          { label: '💰 Ver precios', action: 'precios' },
+          { label: '🛒 Pedir', action: 'pedido' },
+          { label: '🤔 Ayudame a elegir', action: 'elegir' },
+        ]), 300);
+      }, 400);
+
+    } else if (action === 'precios') {
+      addMsg('Los precios actuales 💰', 'bot');
+      setTimeout(() => {
+        addMsg('1 bolsa → <strong>$5.000</strong><br>2 bolsas → <strong>$9.000</strong><br>3 bolsas → <strong>$13.400</strong> ⭐ más popular<br>4 bolsas → <strong>$17.500</strong> + envío gratis', 'bot');
+        setTimeout(() => setChips([
+          { label: '🛒 Hacer un pedido', action: 'pedido' },
+          { label: '📸 Instagram', action: 'instagram' },
+        ]), 300);
+      }, 300);
+
+    } else if (action === 'stock') {
+      addMsg('Stock limitado 👀', 'bot');
+      setTimeout(() => {
+        addMsg('✅ <strong>Clásica</strong> — disponible<br>⏳ <strong>Choco Chips</strong> — vuelve la semana que viene<br>✅ <strong>Arándanos</strong> — disponible', 'bot');
+        setTimeout(() => setChips([
+          { label: '🛒 Pedir', action: 'pedido' },
+          { label: '📬 Avisame del restock', action: 'novedades' },
+        ]), 300);
+      }, 300);
+
+    } else if (action === 'entregas') {
+      addMsg('Coordinamos entregas por DM 🚚', 'bot');
+      setTimeout(() => {
+        addMsg('A partir de <strong>4 unidades</strong>: envío gratis (según zona).<br>Menos de 4: punto de encuentro o envío a cargo del cliente.', 'bot');
+        setTimeout(() => setChips([
+          { label: '🛒 Hacer un pedido', action: 'pedido' },
+          { label: '📸 Instagram', action: 'instagram' },
+          { label: '💬 WhatsApp', action: 'whatsapp' },
+        ]), 300);
+      }, 300);
+
+    } else if (action === 'elegir') {
+      addMsg('¿Qué estás buscando? 🤔', 'bot');
+      setTimeout(() => setChips([
+        { label: '🌾 Algo clásico', action: 'rec_clasica' },
+        { label: '🍫 Algo con chocolate', action: 'rec_choco' },
+        { label: '🫐 Algo frutal', action: 'rec_frutal' },
+        { label: '🎲 No sé, recomendame', action: 'rec_combo' },
+      ]), 300);
+
+    } else if (action === 'rec_clasica') {
+      addMsg('La Clásica nunca falla 🌾', 'bot');
+      setTimeout(() => {
+        addMsg('Avena con miel, almendras y nueces. Simple, rica y artesanal.', 'bot');
+        setTimeout(() => setChips([{ label: '🛒 Pedir Clásica', action: 'pedido' }]), 300);
+      }, 300);
+
+    } else if (action === 'rec_choco') {
+      addMsg('Choco Chips vuela siempre 🍫', 'bot');
+      setTimeout(() => {
+        addMsg('Está un poco limitada ahora pero vuelve la semana que viene. ¿Te anoto para avisarte?', 'bot');
+        setTimeout(() => setChips([
+          { label: '📬 Avisame del restock', action: 'novedades' },
+          { label: '🛒 Pedir igual', action: 'pedido' },
+        ]), 300);
+      }, 300);
+
+    } else if (action === 'rec_frutal') {
+      addMsg('Arándanos es para los que quieren algo distinto 🫐', 'bot');
+      setTimeout(() => {
+        addMsg('Dulce, crocante, ideal con yogur o sola como snack.', 'bot');
+        setTimeout(() => setChips([{ label: '🛒 Pedir Arándanos', action: 'pedido' }]), 300);
+      }, 300);
+
+    } else if (action === 'rec_combo') {
+      addMsg('Para los indecisos: combo de 2 o 3 sabores 🎉', 'bot');
+      setTimeout(() => {
+        addMsg('Clásica + Arándanos es imbatible. Con 3 bolsas sale <strong>$13.400</strong> ⭐', 'bot');
+        setTimeout(() => setChips([
+          { label: '🛒 Pedir combo', action: 'pedido' },
+          { label: '💰 Ver precios', action: 'precios' },
+        ]), 300);
+      }, 300);
+
+    } else if (action === 'novedades') {
+      addMsg('Te avisamos de restock y promos 🌾', 'bot');
+      setTimeout(() => {
+        addMsg('Dejame tu mail y te sumamos a la lista de Crune.', 'bot');
+        showMailInput(true);
+        state = 'awaiting_mail';
+      }, 300);
+
+    } else if (action === 'pedido') {
+      pedido = { nombre: '', zona: '', contacto: '', sabores: [], cantidad: 1, nro: '' };
+      selectedSabores = {};
+      state = 'pedido_nombre';
+      addMsg('Genial 🙌 Vamos con el pedido.', 'bot');
+      setTimeout(() => addMsg('¿Cuál es tu nombre o apodo?', 'bot'), 400);
+
+    } else if (action === 'instagram') {
+      addMsg('Acá te llevo 📸', 'bot');
+      setTimeout(() => {
+        addMsg('👉 <a href="https://www.instagram.com/crune.sa" target="_blank">@crune.sa en Instagram</a><br>Mandanos un DM para hacer tu pedido 📩', 'bot');
+        setTimeout(() => setChips([{ label: '💬 WhatsApp también', action: 'whatsapp' }]), 300);
+      }, 300);
+
+    } else if (action === 'whatsapp') {
+      addMsg('Dale, te mando al WhatsApp 💬', 'bot');
+      setTimeout(() => {
+        addMsg('👉 <a href="https://wa.me/5491158275216?text=Hola!%20Vi%20la%20p%C3%A1gina%20de%20Crune%20y%20quiero%20hacer%20un%20pedido%20%F0%9F%8C%BE" target="_blank">Escribirnos por WhatsApp</a><br>Coordinamos el pedido ahí 🌾', 'bot');
+        setTimeout(() => setChips([{ label: '📸 Instagram también', action: 'instagram' }]), 300);
+      }, 300);
+    }
+  }, 600);
+}
+
+/* ─── Input libre ─── */
+function handleKey(e) { if (e.key === 'Enter') sendUserMsg(); }
+
+function sendUserMsg() {
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+
+  addMsg(text, 'user');
+  clearChips();
+  showSaborSelect(false);
+  showMailInput(false);
+
+  const lower = text.toLowerCase();
+
+  /* ── Estados del flujo de pedido ── */
+  if (state === 'pedido_nombre') {
+    pedido.nombre = text;
+    state = 'idle'; // esperamos la selección visual
+    showLoading();
+    setTimeout(() => {
+      hideLoading();
+      addMsg('Buenísimo, ' + text + ' 🌾', 'bot');
+      setTimeout(() => {
+        addMsg('¿Qué sabores querés? Seleccioná y poné la cantidad.', 'bot');
+        showSaborSelect(true);
+      }, 400);
+    }, 500);
+    return;
+  }
+
+  if (state === 'pedido_zona') {
+    pedido.zona = text;
+    state = 'pedido_contacto';
+    showLoading();
+    setTimeout(() => {
+      hideLoading();
+      addMsg('¿Cuál es tu medio de contacto preferido? (usuario de Instagram o número de WhatsApp)', 'bot');
+    }, 500);
+    return;
+  }
+
+  if (state === 'pedido_contacto') {
+    pedido.contacto = text;
+    state = 'idle';
+
+    // Generar número de pedido
+    pedido.nro = generarNroPedido();
+
+    // Calcular precio
+    const precio = calcPrecio(pedido.cantidad);
+    const nombresMap = { clasica: 'Clásica', choco: 'Choco Chips', arandanos: 'Arándanos' };
+    const saboresStr = pedido.sabores.map(s => nombresMap[s]).join(', ');
+
+    showLoading();
+    setTimeout(async () => {
+      hideLoading();
+
+      // Mostrar tarjeta de confirmación
+      const msgs = document.getElementById('chat-msgs');
+      const card = document.createElement('div');
+      card.className = 'pedido-confirm-card';
+      card.innerHTML =
+        '<span class="pedido-num">Pedido ' + pedido.nro + '</span>' +
+        '👤 <strong>' + pedido.nombre + '</strong><br>' +
+        '🌾 ' + saboresStr + '<br>' +
+        '📦 ' + pedido.cantidad + ' bolsa/s<br>' +
+        '📍 ' + pedido.zona + '<br>' +
+        '📞 ' + pedido.contacto + '<br>' +
+        '💰 <strong>' + formatPeso(precio) + '</strong>';
+      msgs.appendChild(card);
+      scrollDown();
+
+      setTimeout(async () => {
+        addMsg('¡Listo! Tu pedido está registrado 🎉', 'bot');
+        setTimeout(() => {
+          addMsg('Para confirmar y coordinar el pago y el envío, escribinos por:<br>📸 <a href="https://www.instagram.com/crune.sa" target="_blank">@crune.sa en Instagram</a><br>💬 <a href="https://wa.me/5491158275216?text=Hola!%20Hice%20el%20pedido%20' + pedido.nro + '%20por%20la%20web%20de%20Crune%20%F0%9F%8C%BE" target="_blank">WhatsApp</a><br><br>Mencioná tu número <strong>' + pedido.nro + '</strong> así lo encontramos 📩', 'bot');
+          setTimeout(() => setChips([
+            { label: '📸 Ir a Instagram', action: 'instagram' },
+            { label: '💬 Ir a WhatsApp', action: 'whatsapp' },
+          ]), 400);
+        }, 500);
+
+        // Enviar a Google Sheets
+        await enviarPedidoASheets({
+          nro: pedido.nro,
+          nombre: pedido.nombre,
+          sabores: saboresStr,
+          cantidad: pedido.cantidad,
+          precio: precio,
+          zona: pedido.zona,
+          contacto: pedido.contacto,
+          fecha: new Date().toLocaleDateString('es-AR'),
+          hora: new Date().toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }),
+          estado: 'Pendiente'
+        });
+      }, 400);
+    }, 800);
+    return;
+  }
+
+  /* ── Texto libre ── */
+  showLoading();
+  setTimeout(() => {
+    hideLoading();
+    if (lower.includes('precio') || lower.includes('cuesta') || lower.includes('sale') || lower.includes('vale')) {
+      processAction('precios');
+    } else if (lower.includes('sabor') || lower.includes('tienen') || lower.includes('variedad') || lower.includes('flavors')) {
+      processAction('sabores');
+    } else if (lower.includes('stock') || lower.includes('hay') || lower.includes('disponible') || lower.includes('queda')) {
+      processAction('stock');
+    } else if (lower.includes('envio') || lower.includes('envío') || lower.includes('entrega') || lower.includes('manda') || lower.includes('llega')) {
+      processAction('entregas');
+    } else if (lower.includes('pedir') || lower.includes('comprar') || lower.includes('quiero') || lower.includes('pedido')) {
+      processAction('pedido');
+    } else if (lower.includes('instagram') || lower.includes('ig') || lower.includes('@crune')) {
+      processAction('instagram');
+    } else if (lower.includes('whatsapp') || lower.includes('wsp') || lower.includes('wasap')) {
+      processAction('whatsapp');
+    } else if (lower.includes('recomendar') || lower.includes('elegio') || lower.includes('elegir') || lower.includes('cual') || lower.includes('cuál')) {
+      processAction('elegir');
+    } else if (lower.includes('mail') || lower.includes('novedad') || lower.includes('restock') || lower.includes('aviso')) {
+      processAction('novedades');
+    } else if (lower.includes('hola') || lower.includes('buenas') || lower.includes('buen dia') || lower.includes('buenas tardes')) {
+      addMsg('Hola! 👋 ¿En qué te puedo ayudar?', 'bot');
+      setTimeout(() => setChips([
+        { label: '🌾 Ver sabores', action: 'sabores' },
+        { label: '🛒 Hacer un pedido', action: 'pedido' },
+        { label: '💰 Ver precios', action: 'precios' },
+      ]), 300);
+    } else {
+      addMsg('No entendí bien, pero te puedo ayudar con esto 👇', 'bot');
+      setTimeout(() => setChips([
+        { label: '🌾 Ver sabores', action: 'sabores' },
+        { label: '💰 Ver precios', action: 'precios' },
+        { label: '🛒 Hacer un pedido', action: 'pedido' },
+        { label: '🤔 Ayudame a elegir', action: 'elegir' },
+        { label: '📸 Instagram', action: 'instagram' },
+        { label: '💬 WhatsApp', action: 'whatsapp' },
+      ]), 200);
+    }
+  }, 600);
+}
+
+/* ═══ Reviews (original) ═══ */
 function showFlavor(name) {
   document.querySelectorAll('.flavor-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
   document.querySelector('.tab-btn.' + name).classList.add('active');
 }
-
 function goToFlavor(name) {
   showFlavor(name);
-  setTimeout(() => {
-    document.getElementById('sabores').scrollIntoView({behavior:'smooth'});
-  }, 50);
+  setTimeout(() => document.getElementById('sabores').scrollIntoView({ behavior: 'smooth' }), 50);
 }
 
-// ── Star rating ──────────────────────────────────────────────
 let selectedStars = 0;
 const stars = document.querySelectorAll('.star');
-
 stars.forEach(star => {
   star.addEventListener('mouseover', () => {
     const val = parseInt(star.dataset.val);
@@ -553,18 +1432,10 @@ stars.forEach(star => {
   });
 });
 
-// ── Reviews ──────────────────────────────────────────────────
 let reviews = [];
-
 function escapeHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/\n/g, '<br>');
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,'<br>');
 }
-
 function submitReview() {
   const name = document.getElementById('review-name').value.trim();
   const text = document.getElementById('review-text').value.trim();
@@ -577,24 +1448,16 @@ function submitReview() {
   selectedStars = 0;
   stars.forEach(s => s.classList.remove('active'));
 }
-
 function renderReviews() {
   const list = document.getElementById('reviews-list');
   const noMsg = document.getElementById('no-reviews-msg');
-
-  if (reviews.length === 0) {
-    noMsg.style.display = 'block';
-    list.innerHTML = '';
-    return;
-  }
-
-  // Ocultar el mensaje vacío y mostrar las reseñas
+  if (reviews.length === 0) { noMsg.style.display = 'block'; list.innerHTML = ''; return; }
   noMsg.style.display = 'none';
   list.innerHTML = reviews.map(r => `
     <div class="review-card">
       <div class="review-header">
         <span class="review-name">${escapeHtml(r.name)}</span>
-        <span class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</span>
+        <span class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</span>
       </div>
       <p class="review-text">${escapeHtml(r.text)}</p>
     </div>
