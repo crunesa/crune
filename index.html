@@ -569,20 +569,23 @@ function confirmarPedidoFinal(btn){
   btn.closest('.confirm-dialog').remove(); state='idle'; showLoading();
   setTimeout(async function(){
     hideLoading();
-    var nro=await enviarPedidoASheets();
-    var m=document.getElementById('chat-msgs'), em={Clásica:'🌾','Choco Chips':'🍫',Arándanos:'🫐'};
-    var card=document.createElement('div'); card.className='pedido-confirm-card';
-    var lineas=pedido.saboresArray.map(function(s){ return (em[s.nombre]||'🌾')+' '+s.nombre+' × '+s.cantidad; }).join('<br>');
-    card.innerHTML='<span class="pedido-num">Pedido '+nro+'</span>'+lineas+'<br>📍 '+pedido.zona+'<br>📞 '+pedido.contacto+'<br>💰 <strong>'+formatPeso(pedido.precio)+'</strong>';
-    m.appendChild(card); scrollDown();
-    setTimeout(function(){
-      addMsg('¡Listo! Tu pedido quedó registrado 🎉','bot');
-      setTimeout(function(){
-        addMsg('Para pagar y coordinar el envío escribinos con el número <strong>'+nro+'</strong>:<br>📸 <a href="https://www.instagram.com/crune.sa" target="_blank">@crune.sa en Instagram</a><br>💬 <a href="https://wa.me/5491158275216?text=Hola!%20Hice%20el%20pedido%20'+encodeURIComponent(nro)+'%20desde%20la%20web%20de%20Crune%20%F0%9F%8C%BE" target="_blank">WhatsApp</a>','bot');
-        setTimeout(function(){ setChips([{label:'📸 Instagram',action:'instagram'},{label:'💬 WhatsApp',action:'whatsapp'}]); },400);
-      },500);
-    },400);
-  },800);
+   async function enviarPedidoASheets(){
+  var fecha=new Date();
+  var fStr=fecha.toLocaleDateString('es-AR')+' '+fecha.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+  var payload={sabores:pedido.saboresArray,zona:pedido.zona,contacto:pedido.contacto,importe:pedido.precio,fecha:fStr,estado:'Pedido'};
+  try{
+    var r=await fetch(APPS_SCRIPT_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify(payload)
+    });
+    var txt=await r.text();
+    var j=JSON.parse(txt);
+    return j.nro||'#??';
+  }catch(e){
+    console.error('Error:',e);
+    return '#??';
+  }
 }
 function cancelarPedido(btn){
   btn.closest('.confirm-dialog').remove(); state='idle'; pedido={};
